@@ -7,7 +7,7 @@ export const Carousel = () => {
 
   const [books, setBooks] = useState<BookModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [htppError, setHttpError] = useState(null);
+  const [httpError, setHttpError] = useState(null);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -55,10 +55,10 @@ export const Carousel = () => {
     )
   }
 
-  if (htppError) {
+  if (httpError) {
     return (
       <div className="container m-5">
-        <p>{htppError}</p>
+        <p>{httpError}</p>
       </div>
     )
   }

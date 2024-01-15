@@ -15,6 +15,7 @@ public class Book {
 
     @Column(name = "title")
     private String title;
+
     @Column(name = "author")
     private String author;
 
@@ -24,7 +25,7 @@ public class Book {
     @Column(name = "copies")
     private int copies;
 
-    @Column(name = "copiesAvailable")
+    @Column(name = "copies_available")
     private int copiesAvailable;
 
     @Column(name = "category")

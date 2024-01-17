@@ -38,8 +38,8 @@ public class BookService {
         Checkout checkout = new Checkout(
                 userEmail,
                 LocalDate.now().toString(),
-                LocalDate.now().plusDays().toString(),
-                book.get().getId();
+                LocalDate.now().plusDays(7).toString(),
+                book.get().getId()
         );
 
         checkoutRepository.save(checkout);

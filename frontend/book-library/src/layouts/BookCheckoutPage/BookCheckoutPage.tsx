@@ -6,6 +6,7 @@ import { CheckoutAndReviewBox } from './CheckoutAndReviewBox';
 import ReviewModel from '../../models/ReviewModel';
 import { LatestReviews } from './LatestReviews';
 import { useOktaAuth } from '@okta/okta-react';
+import { error } from 'console';
 
 export const BookCheckoutPage = () => {
 
@@ -24,6 +25,10 @@ export const BookCheckoutPage = () => {
   // Loan Count State
   const [currentLoansCount, setCurrentLoansCount] = useState(0);
   const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] = useState(true);
+
+  // Is Book Check Out?
+  const [isChecedOut, setIsCheckedOut] = useState(false);
+  const [isLoadingBookCheckedOut, SetIsLoadingBookCheckedOut] = useState(true);
 
   const bookId = window.location.pathname.split('/')[2];
 
@@ -58,7 +63,7 @@ export const BookCheckoutPage = () => {
     });
   }, []);
 
-  // Reviews
+  // Reviews 
   useEffect(() => {
     const fetchBookReviews = async () => {
         const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}`;
@@ -130,7 +135,35 @@ export const BookCheckoutPage = () => {
     })
   }, [authState]);
 
-  if (isLoading || isLoadingReview || isLoadingCurrentLoansCount) {
+  useEffect(() => {
+    const fetchUserCheckOutBook = async () => {
+      if (authState && authState.isAuthenticated) {
+        const url = `http://localhost:8080/api/books/secure/ischeckedout/byuser/?bookId=${bookId}`;
+        const requestOptions = {
+          method: `GET`,
+          headers: {
+            Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+            'Content-Type' : 'application/json'
+          }
+        };
+        const bookCheckedOut = await fetch(url, requestOptions);
+
+        if (!bookCheckedOut.ok) {
+          throw new Error("Something went wrong UserCheckedOutBook!");
+        }
+
+        const bookCheckedOutResponseJson = await bookCheckedOut.json();
+        setIsCheckedOut(bookCheckedOutResponseJson);
+      }
+      SetIsLoadingBookCheckedOut(false);
+    }
+    fetchUserCheckOutBook().catch((error: any) => {
+      SetIsLoadingBookCheckedOut(false);
+      setHttpError(error.message);
+    })
+  }, [authState]);
+
+  if (isLoading || isLoadingReview || isLoadingCurrentLoansCount || isLoadingBookCheckedOut) {
     return <SpinnerLoading />;
   }
 

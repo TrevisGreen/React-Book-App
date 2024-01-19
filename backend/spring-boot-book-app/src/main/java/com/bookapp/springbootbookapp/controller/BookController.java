@@ -24,7 +24,7 @@ public class BookController {
         return bookService.currentLoansCount(userEmail);
     }
 
-    @GetMapping("/secure/isCheckedout/byuser")
+    @GetMapping("/secure/ischeckedout/byuser")
     public Boolean checkoutBOokByUser(@RequestHeader(value = "Authorization") String token,
                                       @RequestParam Long bookId) {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");

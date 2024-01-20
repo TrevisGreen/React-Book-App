@@ -38,7 +38,7 @@ export const BookCheckoutPage = () => {
       const response = await fetch(baseUrl);
 
       if (!response.ok) {
-        throw new Error('Something went wrong fetchbook!');
+        throw new Error('Something went wrong!');
       }
 
       const responseJson = await response.json();
@@ -60,7 +60,7 @@ export const BookCheckoutPage = () => {
       setIsLoading(false);
       setHttpError(error.message);
     });
-  }, []);
+  }, [isChecedOut]);
 
   // Reviews 
   useEffect(() => {
@@ -70,7 +70,7 @@ export const BookCheckoutPage = () => {
         const responseReviews = await fetch(reviewUrl);
 
         if (!responseReviews.ok) {
-            throw new Error('Something went wrong fetchBookReviews');
+            throw new Error('Something went wrong!');
         }
 
         const responseJsonReviews = await responseReviews.json();
@@ -121,7 +121,7 @@ export const BookCheckoutPage = () => {
         };
         const currentLoansCountResponse = await fetch(url, requestOptions);
         if (!currentLoansCountResponse.ok) {
-          throw new Error('Something went wrong fetchUserCurrentLoansCount!');
+          throw new Error('Something went wrong!');
         }
         const currentLoansCountResponseJson = await currentLoansCountResponse.json();
         setCurrentLoansCount(currentLoansCountResponseJson);
@@ -132,7 +132,7 @@ export const BookCheckoutPage = () => {
       setIsLoadingCurrentLoansCount(false);
       setHttpError(error.message);
     })
-  }, [authState]);
+  }, [authState, isChecedOut]);
 
   useEffect(() => {
     const fetchUserCheckOutBook = async () => {
@@ -148,7 +148,7 @@ export const BookCheckoutPage = () => {
         const bookCheckedOut = await fetch(url, requestOptions);
 
         if (!bookCheckedOut.ok) {
-          throw new Error("Something went wrong UserCheckedOutBook!");
+          throw new Error("Something went wrong!");
         }
 
         const bookCheckedOutResponseJson = await bookCheckedOut.json();
@@ -174,6 +174,22 @@ export const BookCheckoutPage = () => {
     );
   }
 
+  async function checkoutBook() {
+    const url = `http://localhost:8080/api/books/secure/checkout/?bookId=${bookId}`;
+    const requestOptions = {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        'Content-Type' : 'application/json'
+      }
+    };
+    const checkoutResponse = await fetch(url, requestOptions);
+    if (!checkoutResponse.ok) {
+      throw new Error('Something went wrong!');
+    }
+    setIsCheckedOut(true);
+  }
+
   return (
     <div>
         <div className='container d-none d-lg-block'>
@@ -195,7 +211,8 @@ export const BookCheckoutPage = () => {
                     </div>    
                 </div>
                 <CheckoutAndReviewBox book={book} mobile={false} currentLoansCount={currentLoansCount}
-                    isAuthenticated={authState?.isAuthenticated} isCheckedOut={isChecedOut}/>
+                    isAuthenticated={authState?.isAuthenticated} isCheckedOut={isChecedOut}
+                    checkoutBook={checkoutBook}/>
             </div>
             <hr/>
             <LatestReviews reviews={reviews} bookId={book?.id} mobile={false} />
@@ -218,7 +235,8 @@ export const BookCheckoutPage = () => {
                 </div>
             </div>
             <CheckoutAndReviewBox book={book} mobile={true} currentLoansCount={currentLoansCount}
-                isAuthenticated={authState?.isAuthenticated} isCheckedOut={isChecedOut}/>
+                isAuthenticated={authState?.isAuthenticated} isCheckedOut={isChecedOut}
+                checkoutBook={checkoutBook}/>
             <hr/>
             <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
         </div>

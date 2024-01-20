@@ -6,7 +6,6 @@ import { CheckoutAndReviewBox } from './CheckoutAndReviewBox';
 import ReviewModel from '../../models/ReviewModel';
 import { LatestReviews } from './LatestReviews';
 import { useOktaAuth } from '@okta/okta-react';
-import { error } from 'console';
 
 export const BookCheckoutPage = () => {
 
@@ -195,7 +194,8 @@ export const BookCheckoutPage = () => {
                         <StarsReview rating={totatStars} size={32}/>
                     </div>    
                 </div>
-                <CheckoutAndReviewBox book={book} mobile={false} currentLoansCount={currentLoansCount}/>
+                <CheckoutAndReviewBox book={book} mobile={false} currentLoansCount={currentLoansCount}
+                    isAuthenticated={authState?.isAuthenticated} isCheckedOut={isChecedOut}/>
             </div>
             <hr/>
             <LatestReviews reviews={reviews} bookId={book?.id} mobile={false} />
@@ -217,7 +217,8 @@ export const BookCheckoutPage = () => {
                     <StarsReview rating={totatStars} size={32}/>
                 </div>
             </div>
-            <CheckoutAndReviewBox book={book} mobile={true} currentLoansCount={currentLoansCount}/>
+            <CheckoutAndReviewBox book={book} mobile={true} currentLoansCount={currentLoansCount}
+                isAuthenticated={authState?.isAuthenticated} isCheckedOut={isChecedOut}/>
             <hr/>
             <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
         </div>

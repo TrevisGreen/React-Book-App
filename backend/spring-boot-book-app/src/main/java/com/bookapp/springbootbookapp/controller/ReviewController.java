@@ -18,7 +18,7 @@ public class ReviewController {
 
     @GetMapping("/secure/user/book")
     public Boolean reviewBookByUser(@RequestHeader(value = "Authorization") String token,
-                                   @RequestParam Long bookId) throws Exception {
+                                    @RequestParam Long bookId) throws Exception {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
 
         if (userEmail == null) {

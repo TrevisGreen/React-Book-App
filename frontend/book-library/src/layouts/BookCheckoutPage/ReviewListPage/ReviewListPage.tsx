@@ -16,29 +16,30 @@ export const ReviewListPage = () => {
     const [totalAmountOPfReviews, setTotalAmountOfReviews] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
 
-    const bookId = (window.location.pathname).split('/');
+    const bookId = (window.location.pathname).split('/')[2];
 
     useEffect(() => {
         const fetchBookReviews = async () => {
+
             const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}&page=${currentPage - 1}&size=${reviewsPerPage}`;
     
             const responseReviews = await fetch(reviewUrl);
     
             if (!responseReviews.ok) {
-                throw new Error('Something went wrong!');
+                throw new Error('Something went wrong Book Reviews!');
             }
     
-            const responseJsonReviews = await responseReviews.json();
+            const responseJsonReviews = await responseReviews.json();           
+    
+            const responseData = responseJsonReviews._embedded.reviews;
 
             setTotalAmountOfReviews(responseJsonReviews.page.totalElements);
             setTotalPages(responseJsonReviews.page.totalPages);
     
-            const responseData = responseJsonReviews._embedded.reviews;
-    
             const loadedReviews: ReviewModel[] = [];           
     
             for (const key in responseData) {
-              loadedReviews.push({
+                loadedReviews.push({
                 id: responseData[key].id,
                 userEmail: responseData[key].userEmail,
                 date: responseData[key].date,

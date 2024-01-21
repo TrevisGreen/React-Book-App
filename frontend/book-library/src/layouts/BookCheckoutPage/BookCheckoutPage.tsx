@@ -125,7 +125,7 @@ export const BookCheckoutPage = () => {
         };
         const userReview = await fetch(url, requestOptions);
         if (!userReview.ok) {
-          throw new Error("Something went wrong!");
+          throw new Error("Something went wrong! User review book");
         }
         const userReviewResponseJson = await userReview.json();
         setIsReviewLeft(userReviewResponseJson);
@@ -242,7 +242,7 @@ export const BookCheckoutPage = () => {
                 </div>
                 <CheckoutAndReviewBox book={book} mobile={false} currentLoansCount={currentLoansCount}
                     isAuthenticated={authState?.isAuthenticated} isCheckedOut={isChecedOut}
-                    checkoutBook={checkoutBook}/>
+                    checkoutBook={checkoutBook} isReviewLeft={isReviewLeft}/>
             </div>
             <hr/>
             <LatestReviews reviews={reviews} bookId={book?.id} mobile={false} />
@@ -266,7 +266,7 @@ export const BookCheckoutPage = () => {
             </div>
             <CheckoutAndReviewBox book={book} mobile={true} currentLoansCount={currentLoansCount}
                 isAuthenticated={authState?.isAuthenticated} isCheckedOut={isChecedOut}
-                checkoutBook={checkoutBook}/>
+                checkoutBook={checkoutBook} isReviewLeft={isReviewLeft}/>
             <hr/>
             <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
         </div>

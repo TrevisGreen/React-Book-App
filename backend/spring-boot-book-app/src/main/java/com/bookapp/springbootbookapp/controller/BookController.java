@@ -23,11 +23,12 @@ public class BookController {
 
     @GetMapping("/secure/currentloans")
     public List<ShelfCurrentLoansResponse> currentLoans(@RequestHeader(value = "Authorization") String token)
-        throws Exception
+            throws Exception
     {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         return bookService.currentLoans(userEmail);
     }
+
 
     @GetMapping("/secure/currentloans/count")
     public int currentLoansCount(@RequestHeader(value = "Authorization") String token) {

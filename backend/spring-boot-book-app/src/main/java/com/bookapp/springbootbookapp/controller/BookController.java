@@ -54,7 +54,7 @@ public class BookController {
     public void returnBook(@RequestHeader(value = "Authorization") String token,
                            @RequestParam Long bookId) throws Exception {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
-        bookService.checkoutBook(userEmail, bookId);
+        bookService.returnBook(userEmail, bookId);
     }
 }
 

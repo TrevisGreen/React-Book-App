@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import ShelfCurrentLoans from "../../../models/ShelfCurrentLoans";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { Link } from "react-router-dom";
+import { LoansModal } from "./LoansModal";
 
 export const Loans = () => {
 
@@ -116,6 +117,7 @@ export const Loans = () => {
                                 </div>
                             </div>
                             <hr/>
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={false}/>
                         </div>
                     ))}
                     </> :
@@ -167,7 +169,7 @@ export const Loans = () => {
                                             <div className="list-group mt-3">
                                                 <button className="list-group-item list-group-item-action"
                                                     aria-current="true" data-bs-toggle="modal"
-                                                    data-bs-target={`#mobilemodal${shelfCurrentLoan.book.id}`}>
+                                                    data-bs-target={`#mobmodal${shelfCurrentLoan.book.id}`}>
                                                         Manage Loan
                                                 </button>
                                                 <Link to={'search'} className="list-group-item list-group-item-action">
@@ -186,6 +188,7 @@ export const Loans = () => {
                                 </div>
                             
                             <hr/>
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={false}/>
                         </div>
                     ))}
                     </> :

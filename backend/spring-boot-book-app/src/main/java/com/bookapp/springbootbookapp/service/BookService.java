@@ -101,7 +101,7 @@ public class BookService {
         return shelfCurrentLoansResponses;
     }
 
-    public void return Book(String userEmail, Long bookId) throws Exception {
+    public void Book(String userEmail, Long bookId) throws Exception {
 
         Optional<Book> book = bookRepository.findById(bookId);
 

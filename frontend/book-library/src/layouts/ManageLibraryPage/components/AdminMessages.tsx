@@ -68,7 +68,7 @@ export const AdminMessages = () => {
         );
     }
 
-    async function btnSubmitResponseToQuestion(id: number, response: string) {
+    async function submitResponseToQuestion(id: number, response: string) {
         const url = `http://localhost:8080/api/messages/secure/admin/message`;
         if (authState && authState?.isAuthenticated && id !== null && response !== '') {
             const messageAdminRequestModel: AdminMessageRequest = new AdminMessageRequest(id, response);

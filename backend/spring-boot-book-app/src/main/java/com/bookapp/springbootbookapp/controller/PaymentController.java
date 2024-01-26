@@ -1,10 +1,14 @@
 package com.bookapp.springbootbookapp.controller;
 
+import com.bookapp.springbootbookapp.requestmodels.PaymentInfoRequest;
 import com.bookapp.springbootbookapp.service.PaymentService;
+import com.bookapp.springbootbookapp.utils.ExtractJWT;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("https://localhost:3000")
 @RestController
@@ -17,4 +21,42 @@ public class PaymentController {
     public PaymentController(PaymentService paymentService) {
         this.paymentService = paymentService;
     }
+
+    @PutMapping("/payment-intent")
+    public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfoRequest paymentInfoRequest) throws StripeException {
+        PaymentIntent paymentIntent = paymentService.createPaymentIntent(paymentInfoRequest);
+        String paymentStr = paymentIntent.toJson();
+
+        return new ResponseEntity<>(paymentStr, HttpStatus.OK);
+    }
+
+    @PutMapping("/payment-complete")
+    public ResponseEntity<String> stripePaymentComplete(@RequestHeader(value = "Authorization") String token) throws Exception {
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
+        if (userEmail == null) {
+            throw new Exception("User email is missing");
+        }
+        return paymentService.stripePayment(userEmail);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

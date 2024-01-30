@@ -6,8 +6,7 @@ import { Link } from "react-router-dom";
 import PaymentInfoRequest from "../../models/PaymentInfoRequest";
 
 export const PaymentPage = () => {
-
-
+ 
     const { authState } = useOktaAuth();
     const [httpError, setHttpError] = useState(false);
     const [submitDisabled, setSubmitDisabled] = useState(false);
@@ -25,7 +24,7 @@ export const PaymentPage = () => {
                 const paymentResponse = await fetch(url, requestOptions);
                 if (!paymentResponse.ok) {
                     throw new Error("Something went wrong!");
-                }
+                }   
                 const paymentResponseJson = await paymentResponse.json();
                 setFees(paymentResponseJson.amount);
                 setLoadingFees(false);
@@ -47,8 +46,9 @@ export const PaymentPage = () => {
 
         setSubmitDisabled(true);
 
+        
         let paymentInfo = new PaymentInfoRequest(Math.round(fees * 100), 'USD', authState?.accessToken?.claims.sub);
-
+        
         const url = `https://localhost:8443/api/payment/secure/payment-intent`;
         const requestOptions = {
             method: 'POST',
@@ -115,23 +115,25 @@ export const PaymentPage = () => {
         );
     }
 
-    return (
-        <div className="container">
-            {fees > 0 && <div className="card mt-3">
-                <h5 className="card-header">Fees pending: <span className="text-danger">${fees}</span></h5>
-                <div className="card-body">
-                    <h5 className="card-title mb-3">Credit Card</h5>
-                    <CardElement id="card-Element" />
-                    <button disabled={submitDisabled} type="button" className="btn btn-md main-color text-white mt-3">
+    return(
+        <div className='container'>
+            {fees > 0 && <div className='card mt-3'>
+                <h5 className='card-header'>Fees pending: <span className='text-danger'>${fees}</span></h5>
+                <div className='card-body'>
+                    <h5 className='card-title mb-3'>Credit Card</h5>
+                    <CardElement id='card-element' />
+                    <button disabled={submitDisabled} type='button' className='btn btn-md main-color text-white mt-3' 
+                        onClick={checkout}>
                         Pay fees
                     </button>
                 </div>
             </div>}
+
             {fees === 0 && 
-                <div className="mt-3">
+                <div className='mt-3'>
                     <h5>You have no fees!</h5>
-                    <Link type="button" className="btn main-color text-white" to="search">
-                        Explore top books                    
+                    <Link type='button' className='btn main-color text-white' to='search'>
+                        Explore top books
                     </Link>
                 </div>
             }

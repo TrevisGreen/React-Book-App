@@ -25,7 +25,6 @@ export const BookCheckoutPage = () => {
   const [isReviewLeft, setIsReviewLeft] = useState(false);
   const [isLoadingUserReview, setIsLoadingUserReview] = useState(true);
 
-
   // Loan Count State
   const [currentLoansCount, setCurrentLoansCount] = useState(0);
   const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] = useState(true);

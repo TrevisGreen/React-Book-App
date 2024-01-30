@@ -65,10 +65,10 @@ export const CheckoutAndReviewBox: React.FC<{ book: BookModel | undefined, mobil
                     </div>
                 </div>
                 {buttonRender()}               
-                <hr/>
-                <p className="mt-3">
-                    This number can change until placing order has been complete.
-                </p>
+                    <hr/>
+                    <p className="mt-3">
+                        This number can change until placing order has been complete.
+                    </p>
                 {ReviewRender()}
             </div>
         </div>

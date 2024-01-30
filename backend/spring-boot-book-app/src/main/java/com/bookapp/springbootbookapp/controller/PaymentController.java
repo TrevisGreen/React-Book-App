@@ -22,7 +22,7 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @PutMapping("/payment-intent")
+    @PostMapping("/payment-intent")
     public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfoRequest paymentInfoRequest) throws StripeException {
         PaymentIntent paymentIntent = paymentService.createPaymentIntent(paymentInfoRequest);
         String paymentStr = paymentIntent.toJson();

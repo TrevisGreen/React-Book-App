@@ -167,12 +167,12 @@ public class BookService {
 
         TimeUnit time = TimeUnit.DAYS;
 
-        double differenceInTime = time.convert(d1.getTime() - d1.getTime(), TimeUnit.MILLISECONDS);
+        double differenceInTime = time.convert(d1.getTime() - d2.getTime(), TimeUnit.MILLISECONDS);
 
         if (differenceInTime < 0) {
             Payment payment = paymentRepository.findByUserEmail(userEmail);
 
-            payment.setAmount(payment.getAmount() + (differenceInTime * - 1));
+            payment.setAmount(payment.getAmount() + (differenceInTime * -1));
             paymentRepository.save(payment);
         }
 

@@ -208,7 +208,7 @@ export const BookCheckoutPage = () => {
   }
 
   async function checkoutBook() {
-    const url = `${process.env.REACT_APP_API}/books/secure/checkout/?bookId=${bookId}`;
+    const url = `${process.env.REACT_APP_API}/books/secure/checkout/?bookId=${book?.id}`;
     const requestOptions = {
       method: 'PUT',
       headers: {
@@ -220,7 +220,7 @@ export const BookCheckoutPage = () => {
     if (!checkoutResponse.ok) {
       setDisplayError(true);
       return;
-      // throw new Error('Something went wrong!');
+      // throw new Error('Something went wrong checkout!');
     }
     setDisplayError(false);
     setIsCheckedOut(true);

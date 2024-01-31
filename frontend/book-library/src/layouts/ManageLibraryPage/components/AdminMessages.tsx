@@ -38,7 +38,7 @@ export const AdminMessages = () => {
                 };
                 const messagesResponse = await fetch(url, requestOptions);
                 if (!messagesResponse.ok) {
-                    throw new Error("Something went wrong fetchUserMessages!");
+                    throw new Error("Something went wrong!");
                 }
                 const messagesResponseJson = await messagesResponse.json();
 

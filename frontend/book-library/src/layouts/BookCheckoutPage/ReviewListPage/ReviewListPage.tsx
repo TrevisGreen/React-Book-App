@@ -26,7 +26,7 @@ export const ReviewListPage = () => {
             const responseReviews = await fetch(reviewUrl);
     
             if (!responseReviews.ok) {
-                throw new Error('Something went wrong Book Reviews!');
+                throw new Error('Something went wrong!');
             }
     
             const responseJsonReviews = await responseReviews.json();           

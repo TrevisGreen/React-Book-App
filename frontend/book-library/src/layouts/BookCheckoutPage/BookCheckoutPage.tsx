@@ -128,7 +128,7 @@ export const BookCheckoutPage = () => {
         };
         const userReview = await fetch(url, requestOptions);
         if (!userReview.ok) {
-          throw new Error("Something went wrong! User review book");
+          throw new Error("Something went wrong!");
         }
         const userReviewResponseJson = await userReview.json();
         setIsReviewLeft(userReviewResponseJson);
@@ -181,7 +181,7 @@ export const BookCheckoutPage = () => {
         const bookCheckedOut = await fetch(url, requestOptions);
 
         if (!bookCheckedOut.ok) {
-          throw new Error("Something went wrong Checkout Book!");
+          throw new Error("Something went wrong!");
         }
 
         const bookCheckedOutResponseJson = await bookCheckedOut.json();
@@ -220,7 +220,7 @@ export const BookCheckoutPage = () => {
     if (!checkoutResponse.ok) {
       setDisplayError(true);
       return;
-      // throw new Error('Something went wrong checkout!');
+      // throw new Error('Something went wrong!');
     }
     setDisplayError(false);
     setIsCheckedOut(true);
